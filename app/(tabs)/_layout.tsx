@@ -1,35 +1,53 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import { DarkColorScheme, LightColorScheme } from "@/constants/ColorSchemes";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useColorScheme } from "react-native";
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function Index() {
+  let colorScheme = useColorScheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-      }}>
+        headerTintColor:
+          colorScheme != "light"
+            ? DarkColorScheme.background
+            : LightColorScheme.background,
+        tabBarActiveBackgroundColor:
+          colorScheme != "light"
+            ? DarkColorScheme.primary
+            : LightColorScheme.primary,
+        tabBarStyle: {
+          borderTopWidth: 0,
+        },
+        tabBarActiveTintColor:
+          colorScheme != "light"
+            ? DarkColorScheme.accent
+            : LightColorScheme.accent,
+        tabBarInactiveBackgroundColor:
+          colorScheme != "light"
+            ? DarkColorScheme.primary
+            : LightColorScheme.primary,
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="(home)/index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="home" size={24} color={color} />
           ),
+          title: "Home",
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="settings"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="settings-outline" size={24} color={color} />
           ),
+          title: "Settings",
         }}
       />
     </Tabs>
