@@ -7,6 +7,7 @@ const currencySymbols = {
   RSD: "дин.",
   SGD: "S$",
   USD: "$",
+  PHP: "₱",
 };
 
 export default currencySymbols;

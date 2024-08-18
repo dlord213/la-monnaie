@@ -1,3 +1,13 @@
-const currencies = ["EUR", "GBP", "HKD", "INR", "JPY", "RSD", "SGD", "USD"];
+const currencies = [
+  "EUR",
+  "GBP",
+  "HKD",
+  "INR",
+  "JPY",
+  "RSD",
+  "SGD",
+  "USD",
+  "PHP",
+];
 
 export default currencies;

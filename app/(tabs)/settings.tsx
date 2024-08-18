@@ -1,16 +1,24 @@
 import { DarkColorScheme, LightColorScheme } from "@/constants/ColorSchemes";
-import { StyleSheet, View, Text, useColorScheme } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  useColorScheme,
+  ActivityIndicator,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ThemedText from "@/components/ThemedText";
-import { useState } from "react";
+import { useContext } from "react";
 import { Picker } from "@react-native-picker/picker";
+import currencies from "@/constants/AvailableCurrencies";
+import CurrencyContext from "@/contexts/CurrencyContext";
 
 export default function Page() {
   let colorScheme = useColorScheme();
-
   const styleState = styles(colorScheme);
 
-  const [selectedCurrency, setCurrency] = useState("PHP");
+  const currency = useContext(CurrencyContext);
 
   return (
     <SafeAreaView style={styleState.safeAreaView}>
@@ -29,30 +37,87 @@ export default function Page() {
             text="Currency"
             style={{ fontFamily: "WorkSans_400Regular", fontSize: 16 }}
           />
-          <Picker
-            selectedValue={selectedCurrency}
-            onValueChange={(val, index) => setCurrency(val)}
-            style={{
-              width: 120,
-              backgroundColor:
-                colorScheme != "light"
-                  ? DarkColorScheme.primary
-                  : LightColorScheme.primary,
-              color:
+          {currency.currentCurrency != "" ? (
+            <Picker
+              selectedValue={currency.currentCurrency}
+              onValueChange={(val, index) => {
+                currency.setCurrency(val);
+                currency.setCurrencyStored(val);
+              }}
+              style={{
+                width: 120,
+                backgroundColor:
+                  colorScheme != "light"
+                    ? DarkColorScheme.primary
+                    : LightColorScheme.primary,
+                color:
+                  colorScheme != "light"
+                    ? DarkColorScheme.text
+                    : LightColorScheme.text,
+              }}
+              dropdownIconColor={
                 colorScheme != "light"
                   ? DarkColorScheme.text
-                  : LightColorScheme.text,
+                  : LightColorScheme.text
+              }
+              mode="dropdown"
+            >
+              {currencies.map((item) => (
+                <Picker.Item label={item} value={item} key={item} />
+              ))}
+            </Picker>
+          ) : (
+            <ActivityIndicator
+              size={32}
+              color={
+                colorScheme != "light"
+                  ? DarkColorScheme.text
+                  : LightColorScheme.text
+              }
+            />
+          )}
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor:
+                  colorScheme != "light"
+                    ? pressed
+                      ? DarkColorScheme.secondary
+                      : DarkColorScheme.background
+                    : pressed
+                    ? LightColorScheme.secondary
+                    : LightColorScheme.background,
+                padding: 8,
+                flex: 1,
+                borderRadius: 8,
+              },
+            ]}
+            onPress={() => {
+              currency.setCurrencyStored("PHP");
+              currency.setCurrency("PHP");
             }}
-            dropdownIconColor={
-              colorScheme != "light"
-                ? DarkColorScheme.text
-                : LightColorScheme.text
-            }
-            mode="dropdown"
           >
-            <Picker.Item label="GBP" value="GBP" />
-            <Picker.Item label="USD" value="USD" />
-          </Picker>
+            <Text
+              style={{
+                color:
+                  colorScheme != "light"
+                    ? DarkColorScheme.text
+                    : LightColorScheme.text,
+                fontFamily: "WorkSans_400Regular",
+                textAlign: "center",
+              }}
+            >
+              Reset to default currency
+            </Text>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

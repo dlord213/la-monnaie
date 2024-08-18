@@ -1,6 +1,5 @@
 import ThemedText from "@/components/ThemedText";
 import { DarkColorScheme, LightColorScheme } from "@/constants/ColorSchemes";
-import { Image } from "expo-image";
 import {
   ActivityIndicator,
   FlatList,
@@ -12,28 +11,25 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import useLatestData from "@/hooks/useLatestData";
 import { StatusBar } from "expo-status-bar";
+import { useContext } from "react";
+import CurrencyContext from "@/contexts/CurrencyContext";
 
 export default function Page() {
   let colorScheme = useColorScheme();
   const styleState = styles(colorScheme);
 
-  const [latestData, getData] = useLatestData("PHP");
+  const currency = useContext(CurrencyContext);
+
+  const [latestData, getData] = useLatestData(currency.currentCurrency);
 
   return (
     <SafeAreaView style={styleState.safeAreaView}>
       <View style={styleState.headingView}>
         <Text style={styleState.headingText}>LaMonnaie</Text>
-        <View style={styleState.flagHeadingView}>
-          <Image
-            source={require("../../../assets/images/flags/ph.png")}
-            contentFit="contain"
-            style={styleState.image}
-          />
-          <ThemedText
-            text="PHP"
-            style={{ fontFamily: "WorkSans_400Regular" }}
-          />
-        </View>
+        <ThemedText
+          text={currency.currentCurrency}
+          style={{ fontFamily: "WorkSans_400Regular" }}
+        />
       </View>
       <View style={styleState.contentContainer}>
         <ThemedText
@@ -71,7 +67,7 @@ export default function Page() {
         ) : (
           <ActivityIndicator
             color={
-              colorScheme == "light"
+              colorScheme != "light"
                 ? DarkColorScheme.text
                 : LightColorScheme.text
             }
