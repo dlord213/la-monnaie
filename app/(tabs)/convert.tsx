@@ -6,7 +6,6 @@ import {
   Text,
   TextInput,
   Pressable,
-  ActivityIndicator,
 } from "react-native";
 import { DarkColorScheme, LightColorScheme } from "@/constants/ColorSchemes";
 import ThemedText from "@/components/ThemedText";
