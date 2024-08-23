@@ -5,7 +5,6 @@ import {
   Text,
   useColorScheme,
   ActivityIndicator,
-  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ThemedText from "@/components/ThemedText";
