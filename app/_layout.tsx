@@ -26,6 +26,26 @@ export default function RootLayout() {
 
   let colorScheme = useColorScheme();
 
+  // Header colors
+  const isDarkScheme = colorScheme != "light";
+
+  const headerBackgroundColor = isDarkScheme
+    ? DarkColorScheme.background
+    : LightColorScheme.background;
+
+  const statusBarColor = isDarkScheme
+    ? DarkColorScheme.background
+    : LightColorScheme.background;
+
+  const headerTintColor = isDarkScheme
+    ? DarkColorScheme.background
+    : LightColorScheme.background;
+
+  const navigationBarColor = isDarkScheme
+    ? DarkColorScheme.background
+    : LightColorScheme.background;
+  // Header colors
+
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -41,23 +61,11 @@ export default function RootLayout() {
       screenOptions={{
         headerShown: false,
         headerStyle: {
-          backgroundColor:
-            colorScheme != "light"
-              ? DarkColorScheme.background
-              : LightColorScheme.background,
+          backgroundColor: headerBackgroundColor,
         },
-        statusBarColor:
-          colorScheme != "light"
-            ? DarkColorScheme.background
-            : LightColorScheme.background,
-        headerTintColor:
-          colorScheme != "light"
-            ? DarkColorScheme.background
-            : LightColorScheme.background,
-        navigationBarColor:
-          colorScheme != "light"
-            ? DarkColorScheme.background
-            : LightColorScheme.background,
+        statusBarColor: statusBarColor,
+        headerTintColor: headerTintColor,
+        navigationBarColor: navigationBarColor,
       }}
     >
       <Stack.Screen name="(tabs)" />
