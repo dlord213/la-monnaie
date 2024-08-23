@@ -4,8 +4,6 @@ import {
   useColorScheme,
   View,
   Text,
-  TextInput,
-  Pressable,
 } from "react-native";
 import { DarkColorScheme, LightColorScheme } from "@/constants/ColorSchemes";
 import ThemedText from "@/components/ThemedText";
@@ -14,6 +12,8 @@ import { Picker } from "@react-native-picker/picker";
 import currencies from "@/constants/AvailableCurrencies";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import axios from "axios";
+import ThemedTextInput from "@/components/ThemedTextInput";
+import ThemedPressable from "@/components/ThemedPressable";
 
 export default function Page() {
   let colorScheme = useColorScheme();
@@ -126,64 +126,29 @@ export default function Page() {
             ))}
           </Picker>
         </View>
-        <TextInput
-          maxLength={9}
+        <ThemedTextInput
           value={values.amount}
           onChangeText={(text) => handleChange("amount", parseFloat(text))}
-          cursorColor={
-            colorScheme != "light"
-              ? DarkColorScheme.text
-              : LightColorScheme.text
-          }
-          style={{
-            borderColor:
-              colorScheme != "light"
-                ? DarkColorScheme.text
-                : LightColorScheme.text,
-            backgroundColor: colorScheme != "light" ? "#1E293B" : "#E2E8F0",
-            borderWidth: 1,
-            borderRadius: 8,
-            paddingVertical: 8,
-            paddingHorizontal: 16,
-            color:
-              colorScheme != "light"
-                ? DarkColorScheme.text
-                : LightColorScheme.text,
-          }}
         />
-        <Pressable
+        <ThemedPressable
           onPress={() => {
             getConversion();
           }}
-          style={({ pressed }) => [
-            {
-              backgroundColor:
-                colorScheme != "light"
-                  ? pressed
-                    ? DarkColorScheme.secondary
-                    : DarkColorScheme.background
-                  : pressed
-                  ? LightColorScheme.secondary
-                  : LightColorScheme.background,
-              padding: 8,
-              borderRadius: 8,
-              marginVertical: 8,
-            },
-          ]}
-        >
-          <Text
-            style={{
-              color:
-                colorScheme != "light"
-                  ? DarkColorScheme.text
-                  : LightColorScheme.text,
-              fontFamily: "WorkSans_400Regular",
-              textAlign: "center",
-            }}
-          >
-            Convert
-          </Text>
-        </Pressable>
+          children={
+            <Text
+              style={{
+                color:
+                  colorScheme != "light"
+                    ? DarkColorScheme.text
+                    : LightColorScheme.text,
+                fontFamily: "WorkSans_400Regular",
+                textAlign: "center",
+              }}
+            >
+              Convert
+            </Text>
+          }
+        />
         <View
           style={{
             backgroundColor:
