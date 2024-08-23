@@ -25,6 +25,10 @@ export default function ThemedPicker(props) {
         },
         style,
       ]}
+      mode={mode}
+      dropdownIconColor={
+        colorScheme != "light" ? DarkColorScheme.text : LightColorScheme.text
+      }
     >
       {children}
     </Picker>

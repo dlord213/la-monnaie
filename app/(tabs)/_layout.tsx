@@ -12,6 +12,12 @@ export default function Index() {
 
   const [currentCurrency, setCurrency, setCurrencyStored] = useCurrency();
 
+  const isDarkScheme = colorScheme != "light";
+
+  const activeColors = isDarkScheme
+    ? DarkColorScheme.background
+    : LightColorScheme.background;
+
   return (
     <CurrencyContext.Provider
       value={{ currentCurrency, setCurrency, setCurrencyStored }}
@@ -19,25 +25,13 @@ export default function Index() {
       <Tabs
         screenOptions={{
           headerShown: false,
-          headerTintColor:
-            colorScheme != "light"
-              ? DarkColorScheme.background
-              : LightColorScheme.background,
-          tabBarActiveBackgroundColor:
-            colorScheme != "light"
-              ? DarkColorScheme.primary
-              : LightColorScheme.primary,
+          headerTintColor: activeColors,
+          tabBarActiveBackgroundColor: activeColors,
           tabBarStyle: {
             borderTopWidth: 0,
           },
-          tabBarActiveTintColor:
-            colorScheme != "light"
-              ? DarkColorScheme.accent
-              : LightColorScheme.accent,
-          tabBarInactiveBackgroundColor:
-            colorScheme != "light"
-              ? DarkColorScheme.primary
-              : LightColorScheme.primary,
+          tabBarActiveTintColor: activeColors,
+          tabBarInactiveBackgroundColor: activeColors,
         }}
       >
         <Tabs.Screen

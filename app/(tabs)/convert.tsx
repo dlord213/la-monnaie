@@ -14,6 +14,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import axios from "axios";
 import ThemedTextInput from "@/components/ThemedTextInput";
 import ThemedPressable from "@/components/ThemedPressable";
+import ThemedPicker from "@/components/ThemedPicker";
 
 export default function Page() {
   let colorScheme = useColorScheme();
@@ -62,33 +63,16 @@ export default function Page() {
             justifyContent: "space-between",
           }}
         >
-          <Picker
+          <ThemedPicker
             selectedValue={values.fromCurrency}
             onValueChange={(itemValue) => {
               handleChange("fromCurrency", itemValue);
             }}
-            style={{
-              width: 120,
-              backgroundColor:
-                colorScheme != "light"
-                  ? DarkColorScheme.primary
-                  : LightColorScheme.primary,
-              color:
-                colorScheme != "light"
-                  ? DarkColorScheme.text
-                  : LightColorScheme.text,
-            }}
-            dropdownIconColor={
-              colorScheme != "light"
-                ? DarkColorScheme.text
-                : LightColorScheme.text
-            }
             mode="dropdown"
-          >
-            {currencies.map((item) => (
+            children={currencies.map((item) => (
               <Picker.Item label={item} value={item} key={item} />
             ))}
-          </Picker>
+          />
           <FontAwesome6
             name="arrows-rotate"
             size={24}
@@ -98,33 +82,16 @@ export default function Page() {
                 : LightColorScheme.text
             }
           />
-          <Picker
+          <ThemedPicker
             selectedValue={values.toCurrency}
             onValueChange={(itemValue) => {
               handleChange("toCurrency", itemValue);
             }}
-            style={{
-              width: 120,
-              backgroundColor:
-                colorScheme != "light"
-                  ? DarkColorScheme.primary
-                  : LightColorScheme.primary,
-              color:
-                colorScheme != "light"
-                  ? DarkColorScheme.text
-                  : LightColorScheme.text,
-            }}
-            dropdownIconColor={
-              colorScheme != "light"
-                ? DarkColorScheme.text
-                : LightColorScheme.text
-            }
             mode="dropdown"
-          >
-            {currencies.map((item) => (
+            children={currencies.map((item) => (
               <Picker.Item label={item} value={item} key={item} />
             ))}
-          </Picker>
+          />
         </View>
         <ThemedTextInput
           value={values.amount}
