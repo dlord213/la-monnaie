@@ -13,6 +13,8 @@ import { useContext } from "react";
 import { Picker } from "@react-native-picker/picker";
 import currencies from "@/constants/AvailableCurrencies";
 import CurrencyContext from "@/contexts/CurrencyContext";
+import ThemedPicker from "@/components/ThemedPicker";
+import ThemedPressable from "@/components/ThemedPressable";
 
 export default function Page() {
   let colorScheme = useColorScheme();
@@ -38,34 +40,17 @@ export default function Page() {
             style={{ fontFamily: "WorkSans_400Regular", fontSize: 16 }}
           />
           {currency.currentCurrency != "" ? (
-            <Picker
+            <ThemedPicker
               selectedValue={currency.currentCurrency}
               onValueChange={(val, index) => {
                 currency.setCurrency(val);
                 currency.setCurrencyStored(val);
               }}
-              style={{
-                width: 120,
-                backgroundColor:
-                  colorScheme != "light"
-                    ? DarkColorScheme.primary
-                    : LightColorScheme.primary,
-                color:
-                  colorScheme != "light"
-                    ? DarkColorScheme.text
-                    : LightColorScheme.text,
-              }}
-              dropdownIconColor={
-                colorScheme != "light"
-                  ? DarkColorScheme.text
-                  : LightColorScheme.text
-              }
               mode="dropdown"
-            >
-              {currencies.map((item) => (
+              children={currencies.map((item) => (
                 <Picker.Item label={item} value={item} key={item} />
               ))}
-            </Picker>
+            />
           ) : (
             <ActivityIndicator
               size={32}
@@ -84,40 +69,27 @@ export default function Page() {
             alignItems: "center",
           }}
         >
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor:
-                  colorScheme != "light"
-                    ? pressed
-                      ? DarkColorScheme.secondary
-                      : DarkColorScheme.background
-                    : pressed
-                    ? LightColorScheme.secondary
-                    : LightColorScheme.background,
-                padding: 8,
-                flex: 1,
-                borderRadius: 8,
-              },
-            ]}
+          <ThemedPressable
             onPress={() => {
               currency.setCurrencyStored("PHP");
               currency.setCurrency("PHP");
             }}
-          >
-            <Text
-              style={{
-                color:
-                  colorScheme != "light"
-                    ? DarkColorScheme.text
-                    : LightColorScheme.text,
-                fontFamily: "WorkSans_400Regular",
-                textAlign: "center",
-              }}
-            >
-              Reset to default currency
-            </Text>
-          </Pressable>
+            style={{ flex: 1 }}
+            children={
+              <Text
+                style={{
+                  color:
+                    colorScheme != "light"
+                      ? DarkColorScheme.text
+                      : LightColorScheme.text,
+                  fontFamily: "WorkSans_400Regular",
+                  textAlign: "center",
+                }}
+              >
+                Reset to default currency
+              </Text>
+            }
+          />
         </View>
       </View>
     </SafeAreaView>
